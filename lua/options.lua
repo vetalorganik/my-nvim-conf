@@ -31,11 +31,11 @@ vim.o.undofile = true
 -- Disable swap files to prevent annoying errors
 vim.opt.swapfile = false
 
--- Case-insensitive searching
+-- Case insensitive searching
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
--- Keep signcolumn on by default
+-- Keep sign column on by default
 vim.o.signcolumn = "yes"
 
 -- Decrease update time
@@ -65,7 +65,11 @@ vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
 
--- Diagnositcs popup config
+-- Enable spellchecking
+vim.opt.spell = true
+vim.opt.spelllang = { "en", "ru", "uk" }
+
+-- Diagnostics configuration
 vim.diagnostic.config({
 	update_in_insert = false,
 	severity_sort = true,
