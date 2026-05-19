@@ -1,0 +1,20 @@
+-- Configuration
+require("options")
+require("helpers")
+require("keymaps")
+require("autocmds")
+
+-- Plugins
+require("plugins.theme")
+require("plugins.dev-icons")
+require("plugins.which-key")
+require("plugins.telescope")
+require("plugins.mini-nvim")
+require("plugins.neo-tree")
+require("plugins.indent-line")
+require("plugins.git-signs")
+require("plugins.guess-indent")
+require("plugins.todo-comments")
+require("plugins.lsp")
+require("plugins.formatting")
+require("plugins.treesitter")
