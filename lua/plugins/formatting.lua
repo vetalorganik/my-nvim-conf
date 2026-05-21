@@ -1,5 +1,28 @@
 vim.pack.add({ { src = vim.g.gh("stevearc/conform.nvim") } })
 
+local formatters_by_ft = {
+	lua = { "stylua" },
+	python = { "black" },
+	rust = { "rustfmt" },
+
+	html = { "prettierd" },
+	css = { "prettierd" },
+	scss = { "prettierd" },
+
+	javascript = { "eslint_d" },
+	typescript = { "eslint_d" },
+	javascriptreact = { "eslint_d" },
+	typescriptreact = { "eslint_d" },
+	svelte = { "prettierd" },
+
+	sh = { "shfmt" },
+	json = { "prettierd" },
+	jsonc = { "prettierd" },
+	yaml = { "prettierd" },
+	toml = { "taplo" },
+	markdown = { "prettierd" },
+}
+
 require("conform").setup({
 	notify_on_error = false,
 	format_on_save = function(bufnr)
@@ -16,22 +39,15 @@ require("conform").setup({
 		else
 			return nil
 		end
+		if formatters_by_ft[vim.bo[bufnr].filetype] then
+			return { timeout_ms = 500 }
+		end
 	end,
 
 	default_format_opts = {
 		lsp_format = "fallback",
 	},
-	formatters_by_ft = {
-		lua = { "stylua" },
-		python = { "black" },
-		rust = { "rustfmt" },
-
-		javascript = { "eslint_d" },
-		typescript = { "eslint_d" },
-		javascriptreact = { "eslint_d" },
-
-		svelte = { "prettierd", "prettier", stop_after_first = true },
-	},
+	formatters_by_ft = formatters_by_ft,
 })
 
 vim.keymap.set({ "n", "v" }, "<leader>f", function()
