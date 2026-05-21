@@ -26,17 +26,7 @@ local formatters_by_ft = {
 require("conform").setup({
 	notify_on_error = false,
 	format_on_save = function(bufnr)
-		local enabled_filetypes = {
-			lua = true,
-			python = true,
-			javascript = true,
-			typescript = true,
-			svelte = true,
-			rust = true,
-		}
-		if enabled_filetypes[vim.bo[bufnr].filetype] then
-			return { timeout_ms = 500 }
-		else
+		if vim.b[bufnr].disable_autoformat or vim.g.disable_autoformat then
 			return nil
 		end
 		if formatters_by_ft[vim.bo[bufnr].filetype] then
@@ -50,6 +40,17 @@ require("conform").setup({
 	formatters_by_ft = formatters_by_ft,
 })
 
+-- Toggle formatting per buffer or globally
+vim.keymap.set("n", "<leader>tf", function()
+	vim.b.disable_autoformat = not vim.b.disable_autoformat
+	print("Format on save: " .. (vim.b.disable_autoformat and "disabled" or "enabled"))
+end, { desc = "Toggle format on save (buffer)" })
+vim.keymap.set("n", "<leader>tF", function()
+	vim.g.disable_autoformat = not vim.g.disable_autoformat
+	print("Format on save (global): " .. (vim.g.disable_autoformat and "disabled" or "enabled"))
+end, { desc = "Toggle format on save (global)" })
+
+-- Format current buffer or all opened buffers
 vim.keymap.set({ "n", "v" }, "<leader>f", function()
 	require("conform").format({ async = true })
 	print("Formatting current buffer...")
